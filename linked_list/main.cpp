@@ -13,8 +13,7 @@ int main()
 
     cout << endl;
 
-    list.delete_at_index(2);
-    list.print_list();
+    cout << list.find(20);
 
     return 0;
 }

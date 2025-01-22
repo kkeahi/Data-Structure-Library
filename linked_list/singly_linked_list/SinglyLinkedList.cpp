@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-SinglyLinkedList::SinglyLinkedList() : head(nullptr) {}
+SinglyLinkedList::SinglyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
 SinglyLinkedList::~SinglyLinkedList()
 {
@@ -10,21 +10,49 @@ SinglyLinkedList::~SinglyLinkedList()
 
     while (current)
     {
-        Node *nextNode = (*current).next;
+        Node *nextNode = current->next;
         delete current;
         current = nextNode;
     }
 }
 
-void SinglyLinkedList::print_list()
+void SinglyLinkedList::print_list() const
 {
     Node *current = head;
 
     while (current)
     {
-        cout << (*current).data << endl;
-        current = (*current).next;
+        cout << current->data << endl;
+        current = current->next;
     };
+}
+
+int SinglyLinkedList::get_size() const
+{
+    return size;
+}
+
+int SinglyLinkedList::find(int value) const
+{
+    if (!head)
+    {
+        return -1;
+    }
+
+    Node *current = head;
+    int currentIndex = 0;
+    while (current)
+    {
+        if (current->data == value)
+        {
+            return currentIndex;
+        }
+
+        current = current->next;
+        currentIndex++;
+    }
+
+    return -1;
 }
 
 void SinglyLinkedList::insert_at_tail(int value)
@@ -35,24 +63,34 @@ void SinglyLinkedList::insert_at_tail(int value)
     {
         head = newNode;
         tail = newNode;
-        return;
+    }
+    else
+    {
+        tail->next = newNode;
+        tail = newNode;
     }
 
-    tail->next = newNode;
-    tail = newNode;
+    size++;
 }
 
 void SinglyLinkedList::insert_at_head(int value)
 {
     Node *newNode = new Node(value);
 
-    (*newNode).next = head;
+    newNode->next = head;
     head = newNode;
+
+    if (!tail)
+    {
+        tail = head;
+    }
+
+    size++;
 }
 
 bool SinglyLinkedList::insert_at_index(int value, int index)
 {
-    if (index < 0)
+    if (index < 0 || index > size)
     {
         return false;
     }
@@ -63,14 +101,19 @@ bool SinglyLinkedList::insert_at_index(int value, int index)
         return true;
     }
 
-    Node *newNode = new Node(value);
+    if (index == size)
+    {
+        insert_at_tail(value);
+        return true;
+    }
 
+    Node *newNode = new Node(value);
     Node *current = head;
     int currentIndex = 0;
 
     while (current && currentIndex < index - 1)
     {
-        current = (*current).next;
+        current = current->next;
         currentIndex++;
     }
 
@@ -80,9 +123,10 @@ bool SinglyLinkedList::insert_at_index(int value, int index)
         return false;
     }
 
-    (*newNode).next = (*current).next;
-    (*current).next = newNode;
+    newNode->next = current->next;
+    current->next = newNode;
 
+    size++;
     return true;
 }
 
@@ -97,7 +141,9 @@ bool SinglyLinkedList::delete_tail()
     {
         delete head;
         head = nullptr;
+        tail = nullptr; //
 
+        size--;
         return true;
     }
 
@@ -109,7 +155,9 @@ bool SinglyLinkedList::delete_tail()
 
     delete current->next;
     current->next = nullptr;
+    tail = current; //
 
+    size--;
     return true;
 }
 
@@ -124,12 +172,18 @@ bool SinglyLinkedList::delete_head()
     head = head->next;
     delete temp;
 
+    if (!head) //
+    {
+        tail = nullptr;
+    }
+
+    size--;
     return true;
 }
 
 bool SinglyLinkedList::delete_at_index(int index)
 {
-    if (index < 0)
+    if (index < 0 || index >= size)
     {
         return false;
     }
@@ -155,7 +209,13 @@ bool SinglyLinkedList::delete_at_index(int index)
 
     Node *temp = current->next;
     current->next = current->next->next;
-    delete temp;
 
+    if (!current->next) //
+    {
+        tail = current;
+    }
+
+    delete temp;
+    size--;
     return true;
 }
