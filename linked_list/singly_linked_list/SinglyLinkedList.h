@@ -1,20 +1,17 @@
 #ifndef SINGLY_LINKED_LIST_H
 #define SINGLY_LINKED_LIST_H
 
-struct Node
-{
-    int data;
-    Node *next;
-
-    Node(int val)
-    {
-        data = val;
-        next = nullptr;
-    }
-};
-
 class SinglyLinkedList
 {
+public:
+    struct Node
+    {
+        int data;
+        Node *next;
+
+        Node(int val) : data(val), next(nullptr) {}
+    };
+
 private:
     Node *head;
     Node *tail;
@@ -26,7 +23,7 @@ public:
 
     void print_list() const;
     int get_size() const;
-    int find(int value) const; // first instance of value
+    int find(int value) const;
 
     void insert_at_tail(int value);
     void insert_at_head(int value);

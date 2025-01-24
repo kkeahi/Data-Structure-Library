@@ -1,19 +1,21 @@
 #include <iostream>
 #include "singly_linked_list/SinglyLinkedList.h"
+#include "doubly_linked_list/DoublyLinkedList.h"
 using namespace std;
 
 int main()
 {
-    SinglyLinkedList list;
-    list.insert_at_tail(10);
-    list.insert_at_tail(20);
-    list.insert_at_head(5);
-    list.insert_at_index(7, 1);
+    DoublyLinkedList list;
+    list.insert_at_tail(0);
+    list.insert_at_tail(1);
+    list.insert_at_tail(2);
+    list.insert_at_tail(3);
+    list.insert_at_tail(4);
+    list.insert_at_tail(5);
+
+    list.insert_at_tail(7);
+    list.insert_at_index(6, 6);
     list.print_list();
-
-    cout << endl;
-
-    cout << list.find(20);
 
     return 0;
 }

@@ -10,9 +10,9 @@ SinglyLinkedList::~SinglyLinkedList()
 
     while (current)
     {
-        Node *nextNode = current->next;
+        Node *temp = current->next;
         delete current;
-        current = nextNode;
+        current = temp;
     }
 }
 
