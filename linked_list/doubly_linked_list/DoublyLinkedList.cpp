@@ -6,13 +6,11 @@ DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
 DoublyLinkedList::~DoublyLinkedList()
 {
-    Node *current = head;
-
-    while (current)
+    while (head)
     {
-        Node *temp = current->next;
-        delete current;
-        current = temp;
+        Node *temp = head;
+        head = head->next;
+        delete temp;
     }
 }
 

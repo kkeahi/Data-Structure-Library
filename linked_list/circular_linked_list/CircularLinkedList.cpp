@@ -1,45 +1,65 @@
-#include "SinglyLinkedList.h"
+#include "CircularLinkedList.h"
 #include <iostream>
 using namespace std;
 
-SinglyLinkedList::SinglyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+CircularLinkedList::CircularLinkedList() : head(nullptr), size(0) {}
 
-SinglyLinkedList::~SinglyLinkedList()
+CircularLinkedList::~CircularLinkedList()
 {
+    if (!head)
+    {
+        return;
+    }
+
+    tail->next = nullptr;
+
     while (head)
     {
         Node *temp = head;
         head = head->next;
         delete temp;
     }
+
+    tail = nullptr;
 }
 
-void SinglyLinkedList::print_list() const
+void CircularLinkedList::print_list() const
 {
+    if (!head)
+    {
+        return;
+    }
+
     Node *current = head;
 
-    while (current)
+    do
     {
         cout << current->data << endl;
         current = current->next;
-    };
+    } while (current != head);
 }
 
-int SinglyLinkedList::get_size() const
+int CircularLinkedList::get_size() const
 {
     return size;
 }
 
-int SinglyLinkedList::find(int value) const
+int CircularLinkedList::find(int value) const
 {
     if (!head)
     {
         return -1;
     }
 
+    if (tail->data == value)
+    {
+        return (size - 1);
+    }
+
     Node *current = head;
     int currentIndex = 0;
-    while (current)
+
+    do
     {
         if (current->data == value)
         {
@@ -48,12 +68,12 @@ int SinglyLinkedList::find(int value) const
 
         current = current->next;
         currentIndex++;
-    }
+    } while (current != head);
 
     return -1;
 }
 
-void SinglyLinkedList::insert_at_tail(int value)
+void CircularLinkedList::insert_at_tail(int value)
 {
     Node *newNode = new Node(value);
 
@@ -61,17 +81,19 @@ void SinglyLinkedList::insert_at_tail(int value)
     {
         head = newNode;
         tail = newNode;
+        tail->next = head;
     }
     else
     {
         tail->next = newNode;
         tail = newNode;
+        tail->next = head;
     }
 
     size++;
 }
 
-void SinglyLinkedList::insert_at_head(int value)
+void CircularLinkedList::insert_at_head(int value)
 {
     Node *newNode = new Node(value);
 
@@ -79,17 +101,19 @@ void SinglyLinkedList::insert_at_head(int value)
     {
         head = newNode;
         tail = newNode;
+        tail->next = head;
     }
     else
     {
         newNode->next = head;
         head = newNode;
+        tail->next = head;
     }
 
     size++;
 }
 
-bool SinglyLinkedList::insert_at_index(int value, int index)
+bool CircularLinkedList::insert_at_index(int value, int index)
 {
     if (index < 0 || index > size)
     {
@@ -125,14 +149,14 @@ bool SinglyLinkedList::insert_at_index(int value, int index)
     return true;
 }
 
-bool SinglyLinkedList::delete_tail()
+bool CircularLinkedList::delete_tail()
 {
     if (!head)
     {
         return false;
     }
 
-    if (!head->next)
+    if (head == tail)
     {
         delete head;
         head = nullptr;
@@ -143,40 +167,45 @@ bool SinglyLinkedList::delete_tail()
     }
 
     Node *current = head;
-    while (current->next && current->next->next)
+    while (current->next != tail)
     {
         current = current->next;
     }
 
     tail = current;
     delete tail->next;
-    tail->next = nullptr;
+    tail->next = head;
 
     size--;
     return true;
 }
 
-bool SinglyLinkedList::delete_head()
+bool CircularLinkedList::delete_head()
 {
     if (!head)
     {
         return false;
     }
 
-    Node *temp = head;
-    head = head->next;
-    delete temp;
-
-    if (!head)
+    if (head == tail)
     {
+        delete head;
+        head = nullptr;
         tail = nullptr;
+    }
+    else
+    {
+        Node *temp = head;
+        head = head->next;
+        tail->next = head;
+        delete temp;
     }
 
     size--;
     return true;
 }
 
-bool SinglyLinkedList::delete_at_index(int index)
+bool CircularLinkedList::delete_at_index(int index)
 {
     if (index < 0 || index >= size)
     {
@@ -186,6 +215,11 @@ bool SinglyLinkedList::delete_at_index(int index)
     if (index == 0)
     {
         return delete_head();
+    }
+
+    if (index == size - 1)
+    {
+        return delete_tail();
     }
 
     Node *current = head;
@@ -199,13 +233,8 @@ bool SinglyLinkedList::delete_at_index(int index)
 
     Node *temp = current->next;
     current->next = current->next->next;
-
-    if (!current->next)
-    {
-        tail = current;
-    }
-
     delete temp;
+
     size--;
     return true;
 }

@@ -1,22 +1,22 @@
 #include <iostream>
 #include "singly_linked_list/SinglyLinkedList.h"
 #include "doubly_linked_list/DoublyLinkedList.h"
+#include "circular_linked_list/CircularLinkedList.h"
 using namespace std;
 
 int main()
 {
-    DoublyLinkedList list;
-    list.insert_at_tail(0);
-    list.insert_at_tail(1);
-    list.insert_at_tail(2);
-    list.insert_at_tail(3);
-    list.insert_at_tail(4);
-    list.insert_at_tail(5);
+    CircularLinkedList list;
+
+    list.insert_at_head(10);
+    list.insert_at_head(20);
+    list.insert_at_head(30);
+
+    list.delete_head();
+    list.delete_head();
+    list.delete_head();
+
     list.print_list();
 
     return 0;
 }
-
-// cd l*
-// g++ -o main main.cpp singly_linked_list/SinglyLinkedList.cpp
-// ./main
