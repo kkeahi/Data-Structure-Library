@@ -141,7 +141,7 @@ bool SinglyLinkedList::delete_tail()
     {
         delete head;
         head = nullptr;
-        tail = nullptr; //
+        tail = nullptr;
 
         size--;
         return true;

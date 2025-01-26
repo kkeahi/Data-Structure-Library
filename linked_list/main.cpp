@@ -12,9 +12,6 @@ int main()
     list.insert_at_tail(3);
     list.insert_at_tail(4);
     list.insert_at_tail(5);
-
-    list.insert_at_tail(7);
-    list.insert_at_index(6, 6);
     list.print_list();
 
     return 0;
