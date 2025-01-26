@@ -2,6 +2,7 @@
 #include "singly_linked_list/SinglyLinkedList.h"
 #include "doubly_linked_list/DoublyLinkedList.h"
 #include "circular_linked_list/CircularLinkedList.h"
+#include "circular_doubly_linked_list/CircularDoublyLinkedList.h"
 using namespace std;
 
 int main()

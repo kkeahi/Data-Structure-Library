@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-CircularLinkedList::CircularLinkedList() : head(nullptr), size(0) {}
+CircularLinkedList::CircularLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
 CircularLinkedList::~CircularLinkedList()
 {

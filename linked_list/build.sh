@@ -11,7 +11,8 @@ CXXFLAGS="-std=c++17 -Wall"
 SRC_FILES="main.cpp \
            singly_linked_list/SinglyLinkedList.cpp \
            doubly_linked_list/DoublyLinkedList.cpp \
-           circular_linked_list/CircularLinkedList.cpp"
+           circular_linked_list/CircularLinkedList.cpp \
+           circular_doubly_linked_list/CircularDoublyLinkedList.cpp"
 
 # Build the project
 echo "Compiling linked list project..."
