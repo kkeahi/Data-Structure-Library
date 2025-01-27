@@ -7,15 +7,12 @@ using namespace std;
 
 int main()
 {
-    CircularLinkedList list;
+    CircularDoublyLinkedList list;
 
     list.insert_at_head(10);
-    list.insert_at_head(20);
-    list.insert_at_head(30);
-
-    list.delete_head();
-    list.delete_head();
-    list.delete_head();
+    list.insert_at_tail(20);
+    list.insert_at_tail(30);
+    list.insert_at_tail(40);
 
     list.print_list();
 
