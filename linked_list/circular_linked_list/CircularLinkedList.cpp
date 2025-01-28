@@ -172,9 +172,10 @@ bool CircularLinkedList::delete_tail()
         current = current->next;
     }
 
+    Node *temp = tail;
     tail = current;
-    delete tail->next;
     tail->next = head;
+    delete temp;
 
     size--;
     return true;
@@ -192,14 +193,15 @@ bool CircularLinkedList::delete_head()
         delete head;
         head = nullptr;
         tail = nullptr;
+
+        size--;
+        return true;
     }
-    else
-    {
-        Node *temp = head;
-        head = head->next;
-        tail->next = head;
-        delete temp;
-    }
+
+    Node *temp = head;
+    head = head->next;
+    tail->next = head;
+    delete temp;
 
     size--;
     return true;

@@ -13,6 +13,7 @@ int main()
     list.insert_at_tail(20);
     list.insert_at_tail(30);
     list.insert_at_tail(40);
+    list.insert_at_tail(50);
 
     list.print_list();
 

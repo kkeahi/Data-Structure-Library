@@ -150,7 +150,7 @@ bool DoublyLinkedList::delete_tail()
         return false;
     }
 
-    if (!head->next)
+    if (head == tail)
     {
         delete head;
         head = nullptr;
@@ -160,9 +160,10 @@ bool DoublyLinkedList::delete_tail()
         return true;
     }
 
+    Node *temp = tail;
     tail = tail->prev;
-    delete tail->next;
     tail->next = nullptr;
+    delete temp;
 
     size--;
     return true;
@@ -175,18 +176,19 @@ bool DoublyLinkedList::delete_head()
         return false;
     }
 
+    if (head == tail)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+
+        size--;
+        return true;
+    }
+
     Node *temp = head;
     head = head->next;
-
-    if (head)
-    {
-        head->prev = nullptr;
-    }
-    else
-    {
-        tail = nullptr;
-    }
-
+    head->prev = nullptr;
     delete temp;
 
     size--;

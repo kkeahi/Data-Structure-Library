@@ -148,3 +148,108 @@ bool CircularDoublyLinkedList::insert_at_index(int value, int index)
     size++;
     return true;
 }
+
+bool CircularDoublyLinkedList::delete_tail()
+{
+    if (!head)
+    {
+        return false;
+    }
+
+    if (head == tail)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+
+        size--;
+        return true;
+    }
+
+    Node *temp = tail;
+    tail = tail->prev;
+    tail->next = head;
+    head->prev = tail;
+    delete temp;
+
+    size--;
+    return true;
+}
+
+bool CircularDoublyLinkedList::delete_head()
+{
+    if (!head)
+    {
+        return false;
+    }
+
+    if (head == tail)
+    {
+        delete head;
+        head = nullptr;
+        tail = nullptr;
+
+        size--;
+        return true;
+    }
+
+    Node *temp = head;
+    head = head->next;
+    tail->next = head;
+    head->prev = tail;
+    delete temp;
+
+    size--;
+    return true;
+}
+
+bool CircularDoublyLinkedList::delete_at_index(int index)
+{
+    if (index < 0 || index >= size)
+    {
+        return false;
+    }
+
+    if (index == 0)
+    {
+        return delete_head();
+    }
+
+    if (index == size - 1)
+    {
+        return delete_tail();
+    }
+
+    Node *current = head;
+    int currentIndex = 0;
+
+    if (index < (size / 2))
+    {
+        current = head;
+        currentIndex = 0;
+
+        while (currentIndex < index)
+        {
+            current = current->next;
+            currentIndex++;
+        }
+    }
+    else
+    {
+        current = tail;
+        currentIndex = size - 1;
+
+        while (currentIndex > index)
+        {
+            current = current->prev;
+            currentIndex--;
+        }
+    }
+
+    current->prev->next = current->next;
+    current->next->prev = current->prev;
+    delete current;
+
+    size--;
+    return true;
+}

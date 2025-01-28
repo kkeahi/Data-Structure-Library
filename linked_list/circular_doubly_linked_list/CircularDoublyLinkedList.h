@@ -30,9 +30,9 @@ public:
     void insert_at_head(int value);
     bool insert_at_index(int value, int index);
 
-    // bool delete_tail();
-    // bool delete_head();
-    // bool delete_at_index(int index);
+    bool delete_tail();
+    bool delete_head();
+    bool delete_at_index(int index);
 };
 
 #endif
