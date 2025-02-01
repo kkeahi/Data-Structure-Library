@@ -5,8 +5,8 @@ class Stack
 {
 private:
     int capacity;
-    int *arr;
     int top;
+    int *arr;
 
     void resize();
 
@@ -14,9 +14,11 @@ public:
     Stack();
     ~Stack();
 
+    bool is_empty() const;
+    int peek() const;
+
     void push(int value);
     bool pop();
-    int peek() const;
 };
 
 #endif
