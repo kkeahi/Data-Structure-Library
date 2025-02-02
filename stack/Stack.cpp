@@ -19,7 +19,6 @@ void Stack::resize()
     }
 
     capacity *= 2;
-
     delete[] temp;
 }
 
