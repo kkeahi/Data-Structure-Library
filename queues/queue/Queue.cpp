@@ -3,6 +3,7 @@
 using namespace std;
 
 Queue::Queue() : size(0), capacity(4), frontIndex(-1), rearIndex(-1), arr(new int[capacity]) {}
+
 Queue::~Queue()
 {
     delete[] arr;

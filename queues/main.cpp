@@ -1,5 +1,6 @@
 #include <iostream>
 #include "queue/Queue.h"
+#include "deque/Deque.h"
 using namespace std;
 
 int main()
@@ -15,8 +16,6 @@ int main()
     q.enqueue(80);
     q.enqueue(90);
     q.enqueue(100);
-
-    q.print();
 
     return 0;
 }

@@ -3,6 +3,7 @@
 using namespace std;
 
 Stack::Stack() : capacity(100), top(-1), arr(new int[capacity]) {}
+
 Stack::~Stack()
 {
     delete[] arr;
