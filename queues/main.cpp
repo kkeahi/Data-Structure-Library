@@ -5,17 +5,17 @@ using namespace std;
 
 int main()
 {
-    Queue q;
-    q.enqueue(10);
-    q.enqueue(20);
-    q.enqueue(30);
-    q.enqueue(40);
-    q.enqueue(50);
-    q.enqueue(60);
-    q.enqueue(70);
-    q.enqueue(80);
-    q.enqueue(90);
-    q.enqueue(100);
+    Deque q;
+
+    q.push_rear(50);
+    q.push_rear(60);
+    q.push_rear(70);
+    q.pop_front();
+    q.pop_front();
+    q.pop_front();
+    q.push_front(20);
+
+    q.print();
 
     return 0;
 }

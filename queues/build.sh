@@ -10,7 +10,7 @@ CXXFLAGS="-std=c++17 -Wall"
 # List all the source files explicitly
 SRC_FILES="main.cpp \
            queue/Queue.cpp \
-           queue/Deque.cpp"
+           deque/Deque.cpp"
 
 # Build the project
 echo "Compiling linked list project..."

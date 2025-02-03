@@ -16,6 +16,8 @@ public:
     Deque();
     ~Deque();
 
+    void print() const;
+
     bool is_empty() const;
     int get_size() const;
     int front() const;

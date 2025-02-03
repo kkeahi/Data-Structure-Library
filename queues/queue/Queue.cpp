@@ -19,8 +19,8 @@ void Queue::resize()
         temp[n] = arr[i];
     }
 
-    delete[] arr;
     arr = temp;
+    delete[] arr;
 
     frontIndex = 0;
     rearIndex = size - 1;
