@@ -13,8 +13,7 @@ void Deque::resize()
 {
     int *temp = new int[capacity * 2];
 
-    int n = 0;
-    for (int i = frontIndex; n < size; i = (i + 1) % capacity, n++)
+    for (int i = frontIndex, int n = 0; n < size; i = (i + 1) % capacity, n++)
     {
         temp[n] = arr[i];
     }

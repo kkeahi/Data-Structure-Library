@@ -15,7 +15,7 @@ SRC_FILES="main.cpp \
            circular_doubly_linked_list/CircularDoublyLinkedList.cpp"
 
 # Build the project
-echo "Compiling linked list project..."
+echo "Compiling project..."
 $CXX $CXXFLAGS -o $OUTPUT $SRC_FILES
 
 # Check if the build was successful
