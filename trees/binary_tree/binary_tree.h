@@ -20,6 +20,8 @@ public:
     BinaryTree();
     ~BinaryTree();
 
+    void deconstruct_tree(Node *root);
+
     Node *get_root() const;
 
     void inorderTraversal(Node *root) const;
@@ -29,10 +31,8 @@ public:
     void insert_root(int value);
     void insert_left(Node *parent, int value);
     void insert_right(Node *parent, int value);
-    void delete_left(Node *parent);
+    void delete_left(Node *parent); // only for leaf nodes
     void delete_right(Node *parent);
-
-    // deconstuctor and delete, and make insert return pointers
 };
 
 #endif

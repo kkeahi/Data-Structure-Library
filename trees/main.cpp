@@ -11,6 +11,7 @@ int main()
     t.insert_left(root, 1);
     t.insert_right(root, 3);
     t.insert_left(root->right, 10);
+    t.delete_right(root);
 
     t.inorderTraversal(root);
     cout << endl;
