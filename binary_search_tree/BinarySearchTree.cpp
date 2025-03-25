@@ -1,5 +1,6 @@
-#include "binary_search_tree.h"
+#include "BinarySearchTree.h"
 #include <iostream>
+#include <algorithm>
 using namespace std;
 
 BinarySearchTree::BinarySearchTree() : root(nullptr) {}
@@ -9,57 +10,18 @@ BinarySearchTree::~BinarySearchTree()
     tree_deconstructor(root);
 }
 
-void BinarySearchTree::tree_deconstructor(Node *root)
+void BinarySearchTree::tree_deconstructor(Node* root)
 {
-    if (!root)
-    {
-        return;
-    }
+    if (!root) return;
 
     tree_deconstructor(root->left);
     tree_deconstructor(root->right);
     delete root;
 }
 
-BinarySearchTree::Node *BinarySearchTree::get_root() const
+BinarySearchTree::Node* BinarySearchTree::get_root() const
 {
     return root;
-}
-
-void BinarySearchTree::inorderTraversal(Node *node) const
-{
-    if (!node)
-    {
-        return;
-    }
-
-    inorderTraversal(node->left);
-    cout << node->data << endl;
-    inorderTraversal(node->right);
-}
-
-void BinarySearchTree::preorderTraversal(Node *node) const
-{
-    if (!node)
-    {
-        return;
-    }
-
-    cout << node->data << endl;
-    preorderTraversal(node->left);
-    preorderTraversal(node->right);
-}
-
-void BinarySearchTree::postorderTraversal(Node *node) const
-{
-    if (!node)
-    {
-        return;
-    }
-
-    postorderTraversal(node->left);
-    postorderTraversal(node->right);
-    cout << node->data << endl;
 }
 
 BinarySearchTree::Node* BinarySearchTree::search(int value) const
@@ -154,10 +116,9 @@ int BinarySearchTree::depth(Node* node) const
     return -1;
 }
 
-
 void BinarySearchTree::insert(int value)
 {
-    Node *newNode = new Node(value);
+    Node* newNode = new Node(value);
 
     if (!root)
     {
@@ -165,15 +126,13 @@ void BinarySearchTree::insert(int value)
         return;
     }
 
-    Node *current = root;
+    Node* current = root;
     while (true)
     {
         if (value < current->data)
         {
             if (current->left)
-            {
                 current = current->left;
-            }
             else
             {
                 current->left = newNode;
@@ -183,16 +142,14 @@ void BinarySearchTree::insert(int value)
         else if (value > current->data)
         {
             if (current->right)
-            {
                 current = current->right;
-            }
             else
             {
                 current->right = newNode;
                 return;
             }
         }
-        else // duplicate value
+        else
         {
             delete newNode;
             return;
@@ -202,8 +159,7 @@ void BinarySearchTree::insert(int value)
 
 BinarySearchTree::Node* BinarySearchTree::removeNode(Node* node, int value)
 {
-    if (!node)
-        return nullptr;
+    if (!node) return nullptr;
 
     if (value < node->data)
     {
@@ -215,13 +171,11 @@ BinarySearchTree::Node* BinarySearchTree::removeNode(Node* node, int value)
     }
     else
     {
-        // Case 1: No children
         if (!node->left && !node->right)
         {
             delete node;
             return nullptr;
         }
-        // Case 2: One child
         else if (!node->left)
         {
             Node* temp = node->right;
@@ -234,18 +188,13 @@ BinarySearchTree::Node* BinarySearchTree::removeNode(Node* node, int value)
             delete node;
             return temp;
         }
-        // Case 3: Two children
         else
         {
-            // Find in-order successor (smallest in right subtree)
             Node* successor = node->right;
             while (successor->left)
                 successor = successor->left;
 
-            // Copy successor's data to current node
             node->data = successor->data;
-
-            // Delete successor
             node->right = removeNode(node->right, successor->data);
         }
     }
@@ -256,4 +205,37 @@ BinarySearchTree::Node* BinarySearchTree::removeNode(Node* node, int value)
 void BinarySearchTree::remove(int value)
 {
     root = removeNode(root, value);
+}
+
+void BinarySearchTree::inorderTraversal(Node* node) const
+{
+    if (!node) return;
+
+    inorderTraversal(node->left);
+    cout << node->data << endl;
+    inorderTraversal(node->right);
+}
+
+void BinarySearchTree::preorderTraversal(Node* node) const
+{
+    if (!node) return;
+
+    cout << node->data << endl;
+    preorderTraversal(node->left);
+    preorderTraversal(node->right);
+}
+
+void BinarySearchTree::postorderTraversal(Node* node) const
+{
+    if (!node) return;
+
+    postorderTraversal(node->left);
+    postorderTraversal(node->right);
+    cout << node->data << endl;
+}
+
+void BinarySearchTree::clear()
+{
+    tree_deconstructor(root);
+    root = nullptr;
 }

@@ -1,5 +1,5 @@
 #include <iostream>
-#include "binary_search_tree/binary_search_tree.h"
+#include "BinarySearchTree.h"
 using namespace std;
 
 int main()
@@ -14,6 +14,9 @@ int main()
     t.insert(8);
     t.insert(5);
     t.insert(12);
+    t.remove(12);
+    cout << endl << t.height() << endl << t.depth(t.get_root());
+    cout << endl << t.findMax() << endl << t.findMax();
 
     t.postorderTraversal(t.get_root());
 }
