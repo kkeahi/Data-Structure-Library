@@ -9,7 +9,8 @@ CXXFLAGS="-std=c++17 -Wall"
 
 # List all the source files explicitly
 SRC_FILES="main.cpp \
-           binary_tree/binary_tree.cpp"
+           binary_tree/binary_tree.cpp \
+           binary_search_tree/binary_search_tree.cpp"
 
 # Build the project
 echo "Compiling project..."

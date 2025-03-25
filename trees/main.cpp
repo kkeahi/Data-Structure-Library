@@ -1,21 +1,19 @@
 #include <iostream>
-#include "binary_tree/binary_tree.h"
+#include "binary_search_tree/binary_search_tree.h"
 using namespace std;
 
 int main()
 {
-    BinaryTree t;
+    BinarySearchTree t;
 
-    t.insert_root(2);
-    BinaryTree::Node *root = t.get_root();
-    t.insert_left(root, 1);
-    t.insert_right(root, 3);
-    t.insert_left(root->right, 10);
-    t.delete_right(root);
+    t.insert(10);
+    t.insert(4);
+    t.insert(6);
+    t.insert(2);
+    t.insert(7);
+    t.insert(8);
+    t.insert(5);
+    t.insert(12);
 
-    t.inorderTraversal(root);
-    cout << endl;
-    t.preorderTraversal(root);
-    cout << endl;
-    t.postorderTraversal(root);
+    t.postorderTraversal(t.get_root());
 }
