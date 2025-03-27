@@ -1,4 +1,4 @@
-#include "../include/ds/CircularLinkedList.h"
+#include "../include/CircularLinkedList.h"
 #include <iostream>
 using namespace std;
 

@@ -1,4 +1,4 @@
-#include "../include/ds/Deque.h"
+#include "../include/Deque.h"
 #include <iostream>
 using namespace std;
 

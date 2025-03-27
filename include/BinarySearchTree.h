@@ -41,8 +41,6 @@ public:
     void inorderTraversal(Node* node) const;
     void preorderTraversal(Node* node) const;
     void postorderTraversal(Node* node) const;
-
-    void clear();
 };
 
 #endif

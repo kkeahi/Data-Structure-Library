@@ -1,4 +1,4 @@
-#include "../include/ds/BinarySearchTree.h"
+#include "../include/BinarySearchTree.h"
 #include <iostream>
 using namespace std;
 

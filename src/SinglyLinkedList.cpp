@@ -1,4 +1,4 @@
-#include "../include/ds/SinglyLinkedList.h"
+#include "../include/SinglyLinkedList.h"
 #include <iostream>
 using namespace std;
 
