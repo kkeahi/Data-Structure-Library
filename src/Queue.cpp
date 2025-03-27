@@ -1,4 +1,4 @@
-#include "Queue.h"
+#include "../include/ds/Queue.h"
 #include <iostream>
 using namespace std;
 
@@ -13,7 +13,7 @@ void Queue::resize()
 {
     int *temp = new int[capacity * 2];
 
-    for (int i = frontIndex, int n = 0; n < size; i = (i + 1) % capacity, n++)
+    for (int i = frontIndex, n = 0; n < size; i = (i + 1) % capacity, n++)
     {
         temp[n] = arr[i];
     }

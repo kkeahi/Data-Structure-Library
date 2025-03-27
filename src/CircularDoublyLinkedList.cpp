@@ -1,35 +1,50 @@
-#include "DoublyLinkedList.h"
+#include "../include/ds/CircularDoublyLinkedList.h"
 #include <iostream>
 using namespace std;
 
-DoublyLinkedList::DoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+CircularDoublyLinkedList::CircularDoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-DoublyLinkedList::~DoublyLinkedList()
+CircularDoublyLinkedList::~CircularDoublyLinkedList()
 {
+    if (!head)
+    {
+        return;
+    }
+
+    tail->next = nullptr;
+
     while (head)
     {
         Node *temp = head;
         head = head->next;
         delete temp;
     }
+
+    tail = nullptr;
 }
 
-void DoublyLinkedList::print_list() const
+void CircularDoublyLinkedList::print_list() const
 {
+    if (!head)
+    {
+        return;
+    }
+
     Node *current = head;
-    while (current)
+
+    do
     {
         cout << current->data << endl;
         current = current->next;
-    }
+    } while (current != head);
 }
 
-int DoublyLinkedList::get_size() const
+int CircularDoublyLinkedList::get_size() const
 {
     return size;
 }
 
-int DoublyLinkedList::find(int value) const
+int CircularDoublyLinkedList::find(int value) const
 {
     if (!head)
     {
@@ -38,7 +53,7 @@ int DoublyLinkedList::find(int value) const
 
     Node *current = head;
     int currentIndex = 0;
-    while (current)
+    do
     {
         if (current->data == value)
         {
@@ -47,12 +62,12 @@ int DoublyLinkedList::find(int value) const
 
         current = current->next;
         currentIndex++;
-    }
+    } while (current != head);
 
     return -1;
 }
 
-void DoublyLinkedList::insert_at_tail(int value)
+void CircularDoublyLinkedList::insert_at_tail(int value)
 {
     Node *newNode = new Node(value);
 
@@ -60,18 +75,22 @@ void DoublyLinkedList::insert_at_tail(int value)
     {
         head = newNode;
         tail = newNode;
+        tail->next = head;
+        head->prev = tail;
     }
     else
     {
-        tail->next = newNode;
+        newNode->next = head;
         newNode->prev = tail;
+        tail->next = newNode;
+        head->prev = newNode;
         tail = newNode;
     }
 
     size++;
 }
 
-void DoublyLinkedList::insert_at_head(int value)
+void CircularDoublyLinkedList::insert_at_head(int value)
 {
     Node *newNode = new Node(value);
 
@@ -79,10 +98,14 @@ void DoublyLinkedList::insert_at_head(int value)
     {
         head = newNode;
         tail = newNode;
+        tail->next = head;
+        head->prev = tail;
     }
     else
     {
         newNode->next = head;
+        newNode->prev = tail;
+        tail->next = newNode;
         head->prev = newNode;
         head = newNode;
     }
@@ -90,7 +113,7 @@ void DoublyLinkedList::insert_at_head(int value)
     size++;
 }
 
-bool DoublyLinkedList::insert_at_index(int value, int index)
+bool CircularDoublyLinkedList::insert_at_index(int value, int index)
 {
     if (index < 0 || index > size)
     {
@@ -100,50 +123,33 @@ bool DoublyLinkedList::insert_at_index(int value, int index)
     if (index == 0)
     {
         insert_at_head(value);
-        size++;
         return true;
     }
 
     if (index == size)
     {
         insert_at_tail(value);
-        size++;
         return true;
     }
 
-    Node *current;
-    if (index < (size / 2)) // from left side
+    Node *newNode = new Node(value);
+    Node *current = head;
+    int currentIndex = 0;
+
+    while (currentIndex < index - 1)
     {
-        current = head;
-        int currentIndex = 0;
-        while (currentIndex != index)
-        {
-            current = current->next;
-            currentIndex++;
-        }
-    }
-    else
-    {
-        current = tail;
-        int currentIndex = size - 1;
-        while (currentIndex != index)
-        {
-            current = current->prev;
-            currentIndex--;
-        }
+        current = current->next;
+        currentIndex++;
     }
 
-    Node *newNode = new Node(value);
-    newNode->next = current;
-    newNode->prev = current->prev;
-    current->prev->next = newNode;
-    current->prev = newNode;
+    newNode->next = current->next;
+    current->next = newNode;
 
     size++;
     return true;
 }
 
-bool DoublyLinkedList::delete_tail()
+bool CircularDoublyLinkedList::delete_tail()
 {
     if (!head)
     {
@@ -162,14 +168,15 @@ bool DoublyLinkedList::delete_tail()
 
     Node *temp = tail;
     tail = tail->prev;
-    tail->next = nullptr;
+    tail->next = head;
+    head->prev = tail;
     delete temp;
 
     size--;
     return true;
 }
 
-bool DoublyLinkedList::delete_head()
+bool CircularDoublyLinkedList::delete_head()
 {
     if (!head)
     {
@@ -188,14 +195,15 @@ bool DoublyLinkedList::delete_head()
 
     Node *temp = head;
     head = head->next;
-    head->prev = nullptr;
+    tail->next = head;
+    head->prev = tail;
     delete temp;
 
     size--;
     return true;
 }
 
-bool DoublyLinkedList::delete_at_index(int index)
+bool CircularDoublyLinkedList::delete_at_index(int index)
 {
     if (index < 0 || index >= size)
     {
@@ -212,8 +220,8 @@ bool DoublyLinkedList::delete_at_index(int index)
         return delete_tail();
     }
 
-    Node *current;
-    int currentIndex;
+    Node *current = head;
+    int currentIndex = 0;
 
     if (index < (size / 2))
     {

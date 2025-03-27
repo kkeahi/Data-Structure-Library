@@ -1,10 +1,10 @@
-#include "CircularDoublyLinkedList.h"
+#include "../include/ds/CircularLinkedList.h"
 #include <iostream>
 using namespace std;
 
-CircularDoublyLinkedList::CircularDoublyLinkedList() : head(nullptr), tail(nullptr), size(0) {}
+CircularLinkedList::CircularLinkedList() : head(nullptr), tail(nullptr), size(0) {}
 
-CircularDoublyLinkedList::~CircularDoublyLinkedList()
+CircularLinkedList::~CircularLinkedList()
 {
     if (!head)
     {
@@ -23,7 +23,7 @@ CircularDoublyLinkedList::~CircularDoublyLinkedList()
     tail = nullptr;
 }
 
-void CircularDoublyLinkedList::print_list() const
+void CircularLinkedList::print_list() const
 {
     if (!head)
     {
@@ -39,20 +39,26 @@ void CircularDoublyLinkedList::print_list() const
     } while (current != head);
 }
 
-int CircularDoublyLinkedList::get_size() const
+int CircularLinkedList::get_size() const
 {
     return size;
 }
 
-int CircularDoublyLinkedList::find(int value) const
+int CircularLinkedList::find(int value) const
 {
     if (!head)
     {
         return -1;
     }
 
+    if (tail->data == value)
+    {
+        return (size - 1);
+    }
+
     Node *current = head;
     int currentIndex = 0;
+
     do
     {
         if (current->data == value)
@@ -67,7 +73,7 @@ int CircularDoublyLinkedList::find(int value) const
     return -1;
 }
 
-void CircularDoublyLinkedList::insert_at_tail(int value)
+void CircularLinkedList::insert_at_tail(int value)
 {
     Node *newNode = new Node(value);
 
@@ -76,21 +82,18 @@ void CircularDoublyLinkedList::insert_at_tail(int value)
         head = newNode;
         tail = newNode;
         tail->next = head;
-        head->prev = tail;
     }
     else
     {
-        newNode->next = head;
-        newNode->prev = tail;
         tail->next = newNode;
-        head->prev = newNode;
         tail = newNode;
+        tail->next = head;
     }
 
     size++;
 }
 
-void CircularDoublyLinkedList::insert_at_head(int value)
+void CircularLinkedList::insert_at_head(int value)
 {
     Node *newNode = new Node(value);
 
@@ -99,21 +102,18 @@ void CircularDoublyLinkedList::insert_at_head(int value)
         head = newNode;
         tail = newNode;
         tail->next = head;
-        head->prev = tail;
     }
     else
     {
         newNode->next = head;
-        newNode->prev = tail;
-        tail->next = newNode;
-        head->prev = newNode;
         head = newNode;
+        tail->next = head;
     }
 
     size++;
 }
 
-bool CircularDoublyLinkedList::insert_at_index(int value, int index)
+bool CircularLinkedList::insert_at_index(int value, int index)
 {
     if (index < 0 || index > size)
     {
@@ -149,7 +149,7 @@ bool CircularDoublyLinkedList::insert_at_index(int value, int index)
     return true;
 }
 
-bool CircularDoublyLinkedList::delete_tail()
+bool CircularLinkedList::delete_tail()
 {
     if (!head)
     {
@@ -166,17 +166,22 @@ bool CircularDoublyLinkedList::delete_tail()
         return true;
     }
 
+    Node *current = head;
+    while (current->next != tail)
+    {
+        current = current->next;
+    }
+
     Node *temp = tail;
-    tail = tail->prev;
+    tail = current;
     tail->next = head;
-    head->prev = tail;
     delete temp;
 
     size--;
     return true;
 }
 
-bool CircularDoublyLinkedList::delete_head()
+bool CircularLinkedList::delete_head()
 {
     if (!head)
     {
@@ -196,14 +201,13 @@ bool CircularDoublyLinkedList::delete_head()
     Node *temp = head;
     head = head->next;
     tail->next = head;
-    head->prev = tail;
     delete temp;
 
     size--;
     return true;
 }
 
-bool CircularDoublyLinkedList::delete_at_index(int index)
+bool CircularLinkedList::delete_at_index(int index)
 {
     if (index < 0 || index >= size)
     {
@@ -223,32 +227,15 @@ bool CircularDoublyLinkedList::delete_at_index(int index)
     Node *current = head;
     int currentIndex = 0;
 
-    if (index < (size / 2))
+    while (currentIndex < index - 1)
     {
-        current = head;
-        currentIndex = 0;
-
-        while (currentIndex < index)
-        {
-            current = current->next;
-            currentIndex++;
-        }
-    }
-    else
-    {
-        current = tail;
-        currentIndex = size - 1;
-
-        while (currentIndex > index)
-        {
-            current = current->prev;
-            currentIndex--;
-        }
+        current = current->next;
+        currentIndex++;
     }
 
-    current->prev->next = current->next;
-    current->next->prev = current->prev;
-    delete current;
+    Node *temp = current->next;
+    current->next = current->next->next;
+    delete temp;
 
     size--;
     return true;
