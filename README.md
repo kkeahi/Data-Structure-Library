@@ -2,37 +2,35 @@
 
 
 ## Overview
-This project is a C++ Data Structures Library that implements a variety of common data structures.
+This project is a C++ Data Structure Library that implements a variety of common data structures.
 The library is designed to be modular, with each data structure having its own header (`.h`) and source (`.cpp`) file.
 
 ---
 
 ## Build and Compile Instructions
 
-### Option 1: Use Precompiled Library
-1. Download the `libdatastructures.a` file.
-2. Compile and run your program using:
-```bash
-g++ -o main main.cpp -I include libdatastructures.a
-./main
-```
 
-### Option 2: Clone and Rebuild
 1. Clone the entire project:
 ```bash
-git clone https://github.com/your-username/data-structures-lib.git
-cd data-structures-lib
+git clone https://github.com/trenston/data-structures-lib.git
 ```
-2. To rebuild and recompile:
+2. To build and compile:
 ```bash
-# Compile all .cpp files to .o
-g++ -c src/*.cpp -I include
+# Create a build directory inside the cloned project
+mkdir -p data-structures-lib/build
 
-# Create a static library
-ar rcs libdatastructures.a *.o
+# Compile all .cpp files into .o files in build/
+for file in data-structures-lib/src/*.cpp; do
+    g++ -c $file -I data-structures-lib/include -o data-structures-lib/build/$(basename ${file%.cpp}.o)
+done
 
-# Compile and run main
-g++ -o main main.cpp -I include libdatastructures.a
+# Create a static library in the root directory
+ar rcs libdatastructures.a data-structures-lib/build/*.o
+
+# Compile main.cpp and link the static library
+g++ -o main main.cpp -I data-structures-lib/include libdatastructures.a
+
+# Run the main executable
 ./main
 ```
 
