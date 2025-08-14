@@ -3,7 +3,6 @@
 
 ## Overview
 This project is a C++ Data Structure Library that implements a variety of common data structures.
-The library is designed to be modular, with each data structure having its own header (`.h`) and source (`.cpp`) file.
 
 ---
 
